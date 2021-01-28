@@ -1,2 +1,2 @@
-# analise_de_sentimentos_twiter
-Para aplicar os conceitos de PLN, fiz um classificador de sentimentos com dados do twiter
+# Classificador_de_sentimentos
+Para aplicar os conceitos de PLN, fiz um classificador de sentimentos 
