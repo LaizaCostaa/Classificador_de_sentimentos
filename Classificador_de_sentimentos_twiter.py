@@ -184,8 +184,80 @@ previsao
 
 previsao.cats
 
+# Texto postitivo 
+
 texto_positivo = 'eu gosto muito de você'
 texto_positivo = preprocessamento(texto_positivo)
+texto_positivo
+
+modelo_carregado(texto_positivo).cats
+
+# Texto negativo
+
+base_teste['tweet_text'][4000]
+
+texto_negativo = base_teste['tweet_text'][4000]
+previsao = modelo_carregado(texto_negativo)
+previsao.cats
+
+# ETAPA 7 - AVALIAÇÃO DO MODELO
+
+previsoes = []
+for texto in base_treinamento['tweet_text']:
+  previsao = modelo_carregado(texto)
+  previsoes.append(previsao.cats)  
+
+previsoes_final = []
+for previsao in previsoes:
+  if previsao ['POSITIVO'] > previsao ['NEGATIVO']:
+    previsoes_final.append(1)
+  else:
+    previsoes_final.append(0)
+
+previsoes_final = np.array(previsoes_final)
+
+previsoes_final
+
+respostas_reais = base_treinamento['sentiment'].values
+respostas_reais
+
+from sklearn.metrics import confusion_matrix, accuracy_score
+accuracy_score(respostas_reais, previsoes_final)
+
+cm = confusion_matrix(respostas_reais, previsoes_final)
+cm
+
+sns.heatmap(cm, annot = True)
+
+# Avaliacao na base de teste
+
+previsoes = []
+for texto in base_teste['tweet_text']:
+  previsao = modelo_carregado(texto)
+  previsoes.append(previsao.cats)
+
+
+previsoes_final = []
+for previsao in previsoes:
+  if previsao['POSITIVO'] > previsao['NEGATIVO']:
+    previsoes_final.append(1)
+  else:
+    previsoes_final.append(0)
+
+previsoes_final = np.array(previsoes_final)
+
+respostas_reais = base_teste['sentiment'].values
+
+accuracy_score(respostas_reais, previsoes_final)
+
+cm = confusion_matrix(respostas_reais, previsoes_final)
+cm  
+
+sns.heatmap(cm, annot=True)
+
+
+
+
 
 
 
